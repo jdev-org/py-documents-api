@@ -1,0 +1,16 @@
+requirements.txt
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual envs
+venv/
+env/
+.venv/
+
+# VS Code / IDE
+.vscode/
+.idea/
