@@ -1,5 +1,6 @@
 requirements.txt
-documents/
+documents/*
+!documents/.gitkeep
 # Python
 __pycache__/
 *.py[cod]
