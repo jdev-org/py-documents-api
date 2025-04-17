@@ -1,4 +1,5 @@
 requirements.txt
+documents/
 # Python
 __pycache__/
 *.py[cod]

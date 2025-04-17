@@ -3,17 +3,18 @@ from pathlib import Path
 from typing import List
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from  config import Config
 
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5051"],
+    allow_origins=[Config.ORIGINS],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-UPLOAD_DIR = Path("documents")
+UPLOAD_DIR = Config.UPLOAD_DIR
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 @app.post("/uploadfile/")
