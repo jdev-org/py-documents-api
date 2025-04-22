@@ -25,13 +25,15 @@ Installer les dépendances nécessaires (dont FastAPI)
 
     $ pip install -r /chemin/vers/requirements.txt (le fichier est présent dans le projet)
 
-Une fois fait, installer le serveur web local uvicorn :
-
-    $ pip install "uvicorn[standard]"
-
 # Démarrage 
 
-    fastapi dev main.py
+Lancement en mode dev avec rechargement à chaque modification (à n'utiliser que pour tester car lourd en utilisation)
+
+    fastapi dev main.py ou uvicorn main:app --reload
+
+Lancement en mode production
+
+    uvicorn main:app --host 127.0.0.1 --port 8000
 
 Le serveur se lance sur http://127.0.0.1:8000
 Le swagger est accessible sur http://127.0.0.1:8000/docs
