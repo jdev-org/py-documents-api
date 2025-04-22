@@ -31,9 +31,23 @@ Lancement en mode dev avec rechargement à chaque modification (à n'utiliser qu
 
     fastapi dev main.py ou uvicorn main:app --reload
 
-Lancement en mode production
 
-    uvicorn main:app --host 127.0.0.1 --port 8000
+# Ajouter le service en production
+
+Copier le fichier exploit/edp-documents.service dans /etc/systemd/system et vérifier les élements et modifier le port si nécessaire
+
+Rechargez systemd : 
+    
+    sudo systemctl daemon-reload
+
+Activez le service :
+
+     sudo systemctl enable edp-documents
+
+Démarrer le service : 
+    
+    sudo systemctl enable edp-documents
+
 
 Le serveur se lance sur http://127.0.0.1:8000
 Le swagger est accessible sur http://127.0.0.1:8000/docs
