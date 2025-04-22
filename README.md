@@ -51,3 +51,9 @@ Démarrer le service :
 
 Le serveur se lance sur http://127.0.0.1:8000
 Le swagger est accessible sur http://127.0.0.1:8000/docs
+
+# Config
+
+Dans le fichier config.py il est possible de modifier plusieurs paramètres :
+- BASE_DIR : chemin vers le dossier courant de l'app (à éviter de modifier car les autres chemin en dépendent)
+- UPLOAD_DIR : dossier de destination des fichiers téléversés
