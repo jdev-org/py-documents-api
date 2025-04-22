@@ -6,6 +6,7 @@ from fastapi.responses import JSONResponse
 from  config import Config
 from fastapi.staticfiles import StaticFiles
 import os
+from models import UploadResponse, ListFilesResponse, DeleteResponse
 
 app = FastAPI()
 app.add_middleware(
@@ -35,16 +36,16 @@ async def create_upload_file(
           f.write(content)
         saved_files.append(file.filename)
 
-    return {"chantier_id": chantier_id, "files": saved_files}
+    return UploadResponse(chantier_id=chantier_id, files=saved_files)
 
 @app.get("/listfiles/")
 async def list_files(chantier_id: str):
     target_dir = UPLOAD_DIR / chantier_id
     if not target_dir.exists():
-        return JSONResponse(content={"files": []})
+        return ListFilesResponse(files=[])
     
     files = [f.name for f in target_dir.iterdir() if f.is_file()]
-    return {"files": files}
+    return ListFilesResponse(files=files)
 
 @app.delete("/deletefile/")
 async def delete_file(chantier_id: str, filename: str):
@@ -52,7 +53,7 @@ async def delete_file(chantier_id: str, filename: str):
     
     if file_path.exists() and file_path.is_file():
         os.remove(file_path)
-        return {"message": f"File '{filename}' deleted successfully"}
+        return DeleteResponse(message=f"File '{filename}' deleted successfully")
     else:
         raise HTTPException(status_code=404, detail=f"File '{filename}' not found")
 
