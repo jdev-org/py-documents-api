@@ -52,8 +52,23 @@ Démarrer le service :
 Le serveur se lance sur http://127.0.0.1:8000
 Le swagger est accessible sur http://127.0.0.1:8000/docs
 
+# Gestion des droits
+
+L'utilisateur qui est utilisé pour exécuter le service doit avoir les droits sur le répertoire qui contient les documents.
+
+Par exmple, si tomcat est utilisé pour exécuter le script (voir fichier `/etc/systemd/system/xxxxx.service`), alors tomcat doit :
+
+- pouvoir écrire dans les logs
+- pouvoir écrire dans le répertoire de stockage des documents
+
+Exemple de commande :
+
+- `chown -R tomcat:tomcat /path/to/documents`
+- `chown -R tomcat:tomcat /path/to/log/dir/monfichier.log`
+- `chown -R tomcat:tomcat /path/to/log/dir/monfichier-error.log`
+
 # Config
 
-Dans le fichier config.py il est possible de modifier plusieurs paramètres :
+Dans le fichier `config.py` il est possible de modifier plusieurs paramètres :
 - BASE_DIR : chemin vers le dossier courant de l'app (à éviter de modifier car les autres chemin en dépendent)
 - UPLOAD_DIR : dossier de destination des fichiers téléversés
