@@ -20,7 +20,7 @@ app.add_middleware(
 UPLOAD_DIR = Config.UPLOAD_DIR
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
-@app.post("/uploadfile/")
+@app.post("/uploadfile")
 async def create_upload_file(
       chantier_id: str = Form(...),
       files: List[UploadFile] = File(...)
@@ -38,7 +38,7 @@ async def create_upload_file(
 
     return UploadResponse(chantier_id=chantier_id, files=saved_files)
 
-@app.get("/listfiles/")
+@app.get("/listfiles")
 async def list_files(chantier_id: str):
     target_dir = UPLOAD_DIR / chantier_id
     if not target_dir.exists():
@@ -47,7 +47,7 @@ async def list_files(chantier_id: str):
     files = [f.name for f in target_dir.iterdir() if f.is_file()]
     return ListFilesResponse(files=files)
 
-@app.delete("/deletefile/")
+@app.delete("/deletefile")
 async def delete_file(chantier_id: str, filename: str):
     file_path = UPLOAD_DIR / chantier_id / filename
     
