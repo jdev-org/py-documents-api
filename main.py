@@ -7,6 +7,12 @@ from  config import Config
 from fastapi.staticfiles import StaticFiles
 import os
 from models import UploadResponse, ListFilesResponse, DeleteResponse
+import logging
+
+logger = logging.getLogger(__name__)
+log_filename = Config.LOG_FILE
+
+logging.basicConfig(filename=log_filename, encoding='utf-8', level=logging.DEBUG, format='%(asctime)s %(message)s')
 
 app = FastAPI()
 app.add_middleware(
@@ -19,6 +25,8 @@ app.add_middleware(
 
 UPLOAD_DIR = Config.UPLOAD_DIR
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+
+logger.debug(f"Upload directory set to: {UPLOAD_DIR}")
 
 @app.post("/uploadfile")
 async def create_upload_file(
@@ -34,6 +42,7 @@ async def create_upload_file(
         with open(file_path, "wb") as f:
           content = await file.read()
           f.write(content)
+          logger.debug(f"Save file: {file_path}")
         saved_files.append(file.filename)
 
     return UploadResponse(chantier_id=chantier_id, files=saved_files)
@@ -53,8 +62,10 @@ async def delete_file(chantier_id: str, filename: str):
     
     if file_path.exists() and file_path.is_file():
         os.remove(file_path)
+        logger.debug(f"Remove file: {filename}")
         return DeleteResponse(message=f"File '{filename}' deleted successfully")
     else:
+        logger.debug(f"File not fount: {filename}")
         raise HTTPException(status_code=404, detail=f"File '{filename}' not found")
 
 app.mount("/files", StaticFiles(directory=UPLOAD_DIR), name="files")
